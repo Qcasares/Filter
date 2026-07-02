@@ -1,0 +1,53 @@
+{
+  "comment": "Domain to region map. Region is a weak prior only: the filter target is US topics, not US publishers, so a US domain nudges but never decides the score. Owner: Quentin Casares.",
+  "regions": {
+    "us": [
+      "cnn.com",
+      "foxnews.com",
+      "nytimes.com",
+      "washingtonpost.com",
+      "usatoday.com",
+      "nbcnews.com",
+      "abcnews.go.com",
+      "cbsnews.com",
+      "politico.com",
+      "thehill.com",
+      "npr.org",
+      "wsj.com",
+      "bloomberg.com",
+      "buzzfeednews.com",
+      "breitbart.com",
+      "espn.com",
+      "latimes.com",
+      "chicagotribune.com"
+    ],
+    "uk": [
+      "bbc.co.uk",
+      "bbc.com",
+      "theguardian.com",
+      "telegraph.co.uk",
+      "thetimes.co.uk",
+      "independent.co.uk",
+      "dailymail.co.uk",
+      "mirror.co.uk",
+      "ft.com",
+      "sky.com",
+      "news.sky.com",
+      "metro.co.uk",
+      "standard.co.uk"
+    ],
+    "intl": [
+      "reuters.com",
+      "apnews.com",
+      "aljazeera.com",
+      "dw.com",
+      "france24.com",
+      "euronews.com"
+    ]
+  },
+  "priorNudge": {
+    "us": 8,
+    "uk": -8,
+    "intl": 0
+  }
+}

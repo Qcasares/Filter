@@ -1,0 +1,9 @@
+{
+  "id": "google-search",
+  "version": 1,
+  "match": ["www.google.com", "google.com"],
+  "pathPrefix": "/search",
+  "container": "div.MjjYud, div.g, g-card",
+  "headline": "h3",
+  "link": "a"
+}

@@ -1,0 +1,8 @@
+{
+  "id": "bbc",
+  "version": 1,
+  "match": ["bbc.co.uk", "bbc.com"],
+  "container": "[data-testid=\"dundee-card\"], [data-testid=\"edinburgh-card\"], [data-testid=\"manchester-card\"], .gs-c-promo",
+  "headline": "[data-testid=\"card-headline\"], .gs-c-promo-heading__title, h2, h3",
+  "link": "a"
+}

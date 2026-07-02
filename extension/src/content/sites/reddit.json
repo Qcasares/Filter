@@ -1,0 +1,8 @@
+{
+  "id": "reddit",
+  "version": 1,
+  "match": ["www.reddit.com", "reddit.com"],
+  "container": "shreddit-post, article",
+  "headline": "a[slot=\"title\"], [slot=\"title\"], h3",
+  "link": "a[slot=\"title\"], a"
+}

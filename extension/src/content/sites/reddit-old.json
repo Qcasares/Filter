@@ -1,0 +1,8 @@
+{
+  "id": "reddit-old",
+  "version": 1,
+  "match": ["old.reddit.com"],
+  "container": "div.thing.link",
+  "headline": "a.title",
+  "link": "a.title"
+}

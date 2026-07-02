@@ -1,0 +1,9 @@
+{
+  "id": "generic",
+  "version": 1,
+  "match": ["*"],
+  "container": "article, .card, .story, .teaser",
+  "headline": "h1, h2, h3",
+  "link": "a",
+  "defaultOff": true
+}

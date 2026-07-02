@@ -1,0 +1,8 @@
+{
+  "id": "google-news",
+  "version": 1,
+  "match": ["news.google.com"],
+  "container": "article",
+  "headline": "a.gPFEn, a.JtKRv, h3 a, h4 a",
+  "link": "a"
+}

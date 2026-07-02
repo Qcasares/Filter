@@ -1,0 +1,8 @@
+{
+  "id": "guardian",
+  "version": 1,
+  "match": ["www.theguardian.com", "theguardian.com"],
+  "container": "li[data-id], .fc-item, [data-testid=\"card\"], [data-link-name=\"article\"]",
+  "headline": ".fc-item__title, [data-testid=\"card-headline\"], .show-underline, h3",
+  "link": "a"
+}

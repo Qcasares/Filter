@@ -1,0 +1,8 @@
+{
+  "id": "youtube",
+  "version": 1,
+  "match": ["www.youtube.com", "youtube.com"],
+  "container": "ytd-rich-item-renderer, ytd-video-renderer, ytd-grid-video-renderer",
+  "headline": "#video-title, yt-formatted-string#video-title",
+  "link": "a#video-title, a#thumbnail"
+}
