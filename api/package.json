@@ -1,0 +1,11 @@
+{
+  "name": "hemisphere-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Hemisphere serverless classifier. Deploy this directory to Vercel.",
+  "author": "Quentin Casares",
+  "engines": {
+    "node": ">=18"
+  }
+}

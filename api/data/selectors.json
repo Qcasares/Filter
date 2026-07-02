@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "configs": [
+    { "id": "google-news", "version": 1, "match": ["news.google.com"], "container": "article", "headline": "a.gPFEn, a.JtKRv, h3 a, h4 a", "link": "a" },
+    { "id": "bbc", "version": 1, "match": ["bbc.co.uk", "bbc.com"], "container": "[data-testid=\"dundee-card\"], [data-testid=\"edinburgh-card\"], [data-testid=\"manchester-card\"], .gs-c-promo", "headline": "[data-testid=\"card-headline\"], .gs-c-promo-heading__title, h2, h3", "link": "a" },
+    { "id": "google-search", "version": 1, "match": ["www.google.com", "google.com"], "pathPrefix": "/search", "container": "div.MjjYud, div.g, g-card", "headline": "h3", "link": "a" },
+    { "id": "reddit", "version": 1, "match": ["www.reddit.com", "reddit.com"], "container": "shreddit-post, article", "headline": "a[slot=\"title\"], [slot=\"title\"], h3", "link": "a[slot=\"title\"], a" },
+    { "id": "reddit-old", "version": 1, "match": ["old.reddit.com"], "container": "div.thing.link", "headline": "a.title", "link": "a.title" },
+    { "id": "guardian", "version": 1, "match": ["www.theguardian.com", "theguardian.com"], "container": "li[data-id], .fc-item, [data-testid=\"card\"], [data-link-name=\"article\"]", "headline": ".fc-item__title, [data-testid=\"card-headline\"], .show-underline, h3", "link": "a" },
+    { "id": "youtube", "version": 1, "match": ["www.youtube.com", "youtube.com"], "container": "ytd-rich-item-renderer, ytd-video-renderer, ytd-grid-video-renderer", "headline": "#video-title, yt-formatted-string#video-title", "link": "a#video-title, a#thumbnail" },
+    { "id": "generic", "version": 1, "match": ["*"], "container": "article, .card, .story, .teaser", "headline": "h1, h2, h3", "link": "a", "defaultOff": true }
+  ]
+}
