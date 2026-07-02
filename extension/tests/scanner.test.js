@@ -28,6 +28,16 @@ describe('collectCandidates', () => {
     expect(collectCandidates(document, config, seen)).toHaveLength(1);
     expect(collectCandidates(document, config, seen)).toHaveLength(0);
   });
+
+  it('re-scans a container that was empty and populated asynchronously', () => {
+    document.body.innerHTML = `<div class="card"><h3>Loading</h3></div>`;
+    const seen = new WeakSet();
+    // First pass: placeholder is too short, so it must not be marked seen.
+    expect(collectCandidates(document, config, seen)).toHaveLength(0);
+    // Content arrives later; the same container is now emitted.
+    document.querySelector('h3').textContent = 'President addresses Congress';
+    expect(collectCandidates(document, config, seen)).toHaveLength(1);
+  });
 });
 
 describe('Scanner', () => {

@@ -39,10 +39,31 @@ export function markRevealed(hash) {
   persistRevealed();
 }
 
-function buildBar(doc, onClick) {
-  const host = doc.createElement('div');
+// Build the reveal bar as a sibling that is valid in the target's parent.
+// Inserting a <div> inside a <ul> or <table> is invalid and breaks layout, and
+// <li>/<tr> cannot host a shadow root directly, so we match the target's tag
+// for the outer host and attach the shadow to an inner <div>.
+function buildBar(doc, el, onClick) {
+  const tag = (el.tagName || 'div').toLowerCase();
+  let host;
+  let shadowTarget;
+  if (tag === 'li') {
+    host = doc.createElement('li');
+    shadowTarget = doc.createElement('div');
+    host.appendChild(shadowTarget);
+  } else if (tag === 'tr') {
+    host = doc.createElement('tr');
+    const td = doc.createElement('td');
+    td.colSpan = 100;
+    shadowTarget = doc.createElement('div');
+    td.appendChild(shadowTarget);
+    host.appendChild(td);
+  } else {
+    host = doc.createElement('div');
+    shadowTarget = host;
+  }
   host.className = 'hemi-bar-host';
-  const shadow = host.attachShadow({ mode: 'open' });
+  const shadow = shadowTarget.attachShadow({ mode: 'open' });
   const style = doc.createElement('style');
   style.textContent = `
     :host { all: initial; display: block; }
@@ -84,7 +105,7 @@ function buildBar(doc, onClick) {
 export function demote(el, hash, opts = {}) {
   if (!el || el.dataset.hemiDemoted === '1') return null;
   const doc = el.ownerDocument;
-  const host = buildBar(doc, () => reveal(el, hash, opts.onReveal));
+  const host = buildBar(doc, el, () => reveal(el, hash, opts.onReveal));
 
   el.dataset.hemiDemoted = '1';
   el.dataset.hemiDisplay = el.style.display || '';

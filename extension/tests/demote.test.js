@@ -18,6 +18,20 @@ describe('demote', () => {
     expect(host.shadowRoot.querySelector('.bar').textContent).toBe('US story hidden · tap to reveal');
   });
 
+  it('uses a valid host tag inside a list so layout is not broken', () => {
+    document.body.innerHTML = '<ul><li id="li1">A US politics headline in a list</li></ul>';
+    const el = document.getElementById('li1');
+    const host = demote(el, 'hash-li');
+    // Host is an <li>, a valid child of <ul>; the shadow lives on an inner div.
+    expect(host.tagName).toBe('LI');
+    expect(host.parentNode.tagName).toBe('UL');
+    const inner = host.firstElementChild;
+    expect(inner.shadowRoot.querySelector('.bar').textContent).toBe('US story hidden · tap to reveal');
+    inner.shadowRoot.querySelector('.bar').click();
+    expect(el.dataset.hemiDemoted).toBeUndefined();
+    expect(document.querySelectorAll('.hemi-bar-host')).toHaveLength(0);
+  });
+
   it('is idempotent', () => {
     document.body.innerHTML = '<article id="a">Headline text here</article>';
     const el = document.getElementById('a');

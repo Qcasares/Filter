@@ -26,8 +26,12 @@ export function collectCandidates(root, config, seen) {
     if (seen.has(el)) continue;
     const headEl = config.headline ? el.querySelector(config.headline) : el;
     const text = ((headEl && headEl.textContent) || '').replace(/\s+/g, ' ').trim();
-    seen.add(el);
+    // Only mark a container seen once it yields a usable headline. Cards that
+    // are inserted empty or with placeholder text and populated asynchronously
+    // (common on YouTube and Reddit) are left unseen so a later scan catches
+    // them rather than skipping them forever.
     if (text.length < MIN_TEXT_LENGTH || !/[a-z]/i.test(text)) continue;
+    seen.add(el);
     out.push({ el, headEl: headEl || el, text });
   }
   return out;

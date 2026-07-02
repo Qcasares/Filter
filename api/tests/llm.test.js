@@ -12,6 +12,11 @@ describe('parseScores', () => {
     expect(parseScores(text)).toEqual([{ hash: 'y', score: 10, category: null }]);
   });
 
+  it('returns an empty array for truncated or malformed output', () => {
+    expect(parseScores('[{"hash":"a","score":80},{"hash":"b","sc')).toEqual([]);
+    expect(parseScores('no json here at all')).toEqual([]);
+  });
+
   it('clamps scores into 0..100 and rounds', () => {
     expect(parseScores('[{"hash":"a","score":140},{"hash":"b","score":-5},{"hash":"c","score":33.6}]'))
       .toEqual([

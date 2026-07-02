@@ -6,9 +6,14 @@
 //
 // Returns: { version, configs: [...] }
 
+import { createRequire } from 'node:module';
 import { createKV } from '../lib/kv.js';
 import { adapt, headerGet } from '../lib/http.js';
-import seed from '../data/selectors.json' with { type: 'json' };
+
+// Load the JSON seed with createRequire rather than an import attribute, which
+// is not supported on Node.js 18 or older 20.x (api/package.json allows >=18).
+const require = createRequire(import.meta.url);
+const seed = require('../data/selectors.json');
 
 export async function handleSelectors({ method, headers, env = process.env, kv = createKV(env) }) {
   if (method !== 'GET') return { status: 405, json: { error: 'method_not_allowed' } };

@@ -75,7 +75,10 @@ export async function handleClassify({
     try {
       const { verdicts: llmVerdicts, usage } = await llm(misses, { env });
       const cost = estimateCostUsd(usage, env, misses.length);
-      await kv.set(spendKey, spent + cost, { ttlSeconds: 60 * 60 * 26 });
+      // Atomic increment so concurrent requests cannot clobber each other's
+      // spend and slip past the cap. Set the day's expiry on first write.
+      const total = await kv.incrByFloat(spendKey, cost);
+      if (total === cost) await kv.expire(spendKey, 60 * 60 * 26);
 
       const byHash = new Map(llmVerdicts.map((v) => [v.hash, v]));
       for (const it of misses) {

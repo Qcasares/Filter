@@ -28,10 +28,16 @@ export function parseScores(text) {
   const start = text.indexOf('[');
   const end = text.lastIndexOf(']');
   if (start === -1 || end === -1 || end < start) return [];
-  const arr = JSON.parse(text.slice(start, end + 1));
-  return arr
-    .filter((o) => o && typeof o.hash === 'string')
-    .map((o) => ({ hash: o.hash, score: clampScore(o.score), category: o.category || null }));
+  try {
+    const arr = JSON.parse(text.slice(start, end + 1));
+    return arr
+      .filter((o) => o && typeof o.hash === 'string')
+      .map((o) => ({ hash: o.hash, score: clampScore(o.score), category: o.category || null }));
+  } catch {
+    // Truncated or malformed model output: degrade to no verdicts rather than
+    // throwing and failing the whole batch.
+    return [];
+  }
 }
 
 /**

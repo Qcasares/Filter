@@ -30,6 +30,12 @@ export function memoryKV({ now = () => Date.now() } = {}) {
       store.set(key, { value: next, expires: entry ? entry.expires : 0 });
       return next;
     },
+    async incrByFloat(key, amount) {
+      const entry = live(key);
+      const next = (entry ? Number(entry.value) : 0) + Number(amount);
+      store.set(key, { value: next, expires: entry ? entry.expires : 0 });
+      return next;
+    },
     async expire(key, ttlSeconds) {
       const entry = live(key);
       if (entry) entry.expires = now() + ttlSeconds * 1000;
@@ -49,6 +55,9 @@ export function restKV({ url, token, fetchImpl = fetch }) {
     });
     if (!res.ok) throw new Error(`KV command failed: ${res.status}`);
     const data = await res.json();
+    // Upstash can return 200 with an error field (bad command, quota, etc.).
+    // Surface it rather than silently treating it as a miss or a no-op.
+    if (data.error) throw new Error(`KV command error: ${data.error}`);
     return data.result;
   }
   return {
@@ -65,6 +74,9 @@ export function restKV({ url, token, fetchImpl = fetch }) {
     },
     async incr(key) {
       return Number(await command(['INCR', key]));
+    },
+    async incrByFloat(key, amount) {
+      return Number(await command(['INCRBYFLOAT', key, amount]));
     },
     async expire(key, ttlSeconds) {
       await command(['EXPIRE', key, ttlSeconds]);

@@ -98,13 +98,17 @@ async function init() {
 
   document.getElementById('save').addEventListener('click', async () => {
     const allowlistCategories = [...cats.querySelectorAll('input:checked')].map((c) => c.value);
+    // Prepend https:// when the owner omits the protocol, otherwise the fetch
+    // would resolve against the extension origin and fail silently.
+    let apiBaseUrl = apiBase.value.trim().replace(/\/$/, '');
+    if (apiBaseUrl && !/^https?:\/\//i.test(apiBaseUrl)) apiBaseUrl = 'https://' + apiBaseUrl;
     await saveSettings({
       enabled: enabled.checked,
       threshold: Number(threshold.value),
       genericFallback: genericFallback.checked,
       allowlistCategories,
       perSite,
-      apiBase: apiBase.value.trim().replace(/\/$/, ''),
+      apiBase: apiBaseUrl,
       apiKey: apiKey.value.trim()
     });
     // Ask the background to refresh selector configs now that credentials exist.
