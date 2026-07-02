@@ -9,6 +9,10 @@ import { loadSettings, DEFAULT_SETTINGS } from './settings.js';
 import { applyAllowlist } from './classify/adjust.js';
 import { fetchSelectorUpdates, SELECTOR_STORE_KEY } from './content/selectors.js';
 
+// Firefox exposes the WebExtensions API as `browser`; Chrome and Edge as
+// `chrome`. Bind one name so the rest of the worker is namespace-agnostic.
+const chrome = globalThis.chrome || globalThis.browser;
+
 const cache = createCache();
 const SELECTOR_ALARM = 'hemisphere-selectors';
 

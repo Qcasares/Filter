@@ -38,10 +38,11 @@ export class Scanner {
    * @param {object} config selector config
    * @param {{ onBatch:(cands:object[])=>void, debounceMs?:number, doc?:Document }} opts
    */
-  constructor(config, { onBatch, debounceMs = 400, doc = globalThis.document } = {}) {
+  constructor(config, { onBatch, debounceMs = 400, budgetMs = 15, doc = globalThis.document } = {}) {
     this.config = config;
     this.onBatch = onBatch;
     this.debounceMs = debounceMs;
+    this.budgetMs = budgetMs;
     this.doc = doc;
     this.seen = new WeakSet();
     this.pending = [];
@@ -75,6 +76,11 @@ export class Scanner {
     const start = perfNow();
     const found = collectCandidates(root, this.config, this.seen);
     this.lastScanMs = perfNow() - start;
+    // Performance budget: a single scan should stay under budgetMs. Surface
+    // regressions rather than silently degrading the page.
+    if (this.lastScanMs > this.budgetMs) {
+      console.debug(`[Hemisphere] scan took ${this.lastScanMs.toFixed(1)}ms (budget ${this.budgetMs}ms)`);
+    }
     if (found.length) {
       this.pending.push(...found);
       this.schedule();
