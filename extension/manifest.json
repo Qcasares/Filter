@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "Hemisphere",
+  "version": "1.0.0",
+  "description": "Demote US-topic content across your browsing. Personal, single-user tool.",
+  "author": "Quentin Casares",
+  "permissions": ["storage", "activeTab", "alarms"],
+  "host_permissions": [
+    "https://news.google.com/*",
+    "https://www.google.com/*",
+    "https://www.bbc.co.uk/*",
+    "https://www.bbc.com/*",
+    "https://www.theguardian.com/*",
+    "https://www.reddit.com/*",
+    "https://old.reddit.com/*",
+    "https://www.youtube.com/*"
+  ],
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "action": {
+    "default_popup": "dist/popup.html",
+    "default_title": "Hemisphere"
+  },
+  "options_ui": {
+    "page": "dist/options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://news.google.com/*",
+        "https://www.google.com/search*",
+        "https://www.bbc.co.uk/*",
+        "https://www.bbc.com/*",
+        "https://www.theguardian.com/*",
+        "https://www.reddit.com/*",
+        "https://old.reddit.com/*",
+        "https://www.youtube.com/*"
+      ],
+      "js": ["dist/content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "hemisphere@quentincasares.dev",
+      "strict_min_version": "121.0"
+    }
+  }
+}

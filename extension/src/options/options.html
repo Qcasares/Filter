@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hemisphere settings</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; max-width: 620px; margin: 0 auto; padding: 28px 20px; font-size: 15px; line-height: 1.5; }
+    h1 { font-size: 20px; }
+    h2 { font-size: 16px; margin-top: 28px; }
+    fieldset { border: 1px solid #ddd; border-radius: 8px; margin: 14px 0; padding: 14px 16px; }
+    legend { padding: 0 6px; color: #8a6d1a; font-weight: 600; }
+    label { display: block; margin: 8px 0; }
+    input[type="text"], input[type="password"], textarea { width: 100%; box-sizing: border-box; padding: 8px; font-size: 14px; }
+    .muted { color: #666; font-size: 13px; }
+    .cats label { display: inline-flex; align-items: center; gap: 6px; margin-right: 14px; }
+    button { background: #b8860b; color: #fff; border: 0; border-radius: 6px; padding: 9px 16px; font-size: 14px; cursor: pointer; }
+    #status { margin-left: 12px; color: #2a7; }
+    .row { display: flex; align-items: center; gap: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Hemisphere settings</h1>
+  <p class="muted">Personal tool. One dial: the threshold. Only normalised headline text ever leaves this machine, and only to your own deployment.</p>
+
+  <fieldset>
+    <legend>Core</legend>
+    <label class="row"><input type="checkbox" id="enabled" /> Enabled</label>
+    <label>Threshold: <span id="thresholdValue">70</span>
+      <input type="range" id="threshold" min="0" max="100" step="5" style="width:100%" />
+    </label>
+    <label class="row"><input type="checkbox" id="genericFallback" /> Scan unknown news-like sites (generic h1 to h3 fallback)</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Topic allowlist</legend>
+    <p class="muted">Keep US stories in these categories even when they score above the threshold.</p>
+    <div class="cats" id="cats"></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Site exceptions</legend>
+    <p class="muted">Override the enable state or threshold for specific hosts. Leave a threshold blank to use the global one.</p>
+    <div id="sites"></div>
+    <div class="row">
+      <input type="text" id="newSite" placeholder="example.com" />
+      <button id="addSite" type="button">Add site</button>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Cloud classifier</legend>
+    <p class="muted">Your Vercel deployment and shared secret. Leave blank to run on local rules and cache only.</p>
+    <label>API base URL
+      <input type="text" id="apiBase" placeholder="https://hemisphere.vercel.app" />
+    </label>
+    <label>API key
+      <input type="password" id="apiKey" placeholder="shared secret" />
+    </label>
+  </fieldset>
+
+  <div class="row">
+    <button id="save">Save</button>
+    <span id="status"></span>
+  </div>
+
+  <script src="./options.js"></script>
+</body>
+</html>
