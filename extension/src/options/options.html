@@ -40,6 +40,16 @@
   </fieldset>
 
   <fieldset>
+    <legend>Site exceptions</legend>
+    <p class="muted">Override the enable state or threshold for specific hosts. Leave a threshold blank to use the global one.</p>
+    <div id="sites"></div>
+    <div class="row">
+      <input type="text" id="newSite" placeholder="example.com" />
+      <button id="addSite" type="button">Add site</button>
+    </div>
+  </fieldset>
+
+  <fieldset>
     <legend>Cloud classifier</legend>
     <p class="muted">Your Vercel deployment and shared secret. Leave blank to run on local rules and cache only.</p>
     <label>API base URL

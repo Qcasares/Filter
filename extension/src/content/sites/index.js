@@ -11,8 +11,10 @@ import guardian from './guardian.json';
 import youtube from './youtube.json';
 import generic from './generic.json';
 
+// More specific hosts (old.reddit.com) must come before broader ones
+// (reddit.com) so pickConfig returns the tighter match first.
 export const DEFAULT_CONFIGS = [
-  googleNews, bbc, googleSearch, reddit, redditOld, guardian, youtube, generic
+  googleNews, bbc, googleSearch, redditOld, reddit, guardian, youtube, generic
 ];
 
 function hostMatches(config, host) {
